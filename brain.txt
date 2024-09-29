@@ -1,0 +1,30 @@
+pour les salles de donjon et l'environnement global du jeu on peut utiliser des cellules 
+les cellules peuvent être de plusieurs types : land, donjon room , empy 
+les salles de donjon sont de plusieurs types : Coffre, vide, monstres 
+les salles de coffre donnent des objets, objets qui peuvent être ramassés par le joueur et stockés dans son inventaire 
+les salles de monstres sont des salles où le joueur doit combattre un monstre pour pouvoir passer à la salle suivante
+les monstres peuvent être de plusieurs types : monstre faible, monstre moyen, monstre fort, boss
+quand un monstre est tué il peut laisser tomber des objets
+
+durant les phases de combats un joueur peut faire 4 action : attaquer, se défendre, utiliser un objet, passer son tour
+les monstre peuvent faire 2 actions : attaquer, se défendre
+
+
+un donjon est un ensemble de salles
+
+
+
+
+/getinfo : 
+{
+    "player":{}
+    "environnement":{
+        "north cell":{},
+        "west cell":{},
+        "east cell":{},
+        "south cell":{}
+
+    }
+}
+
+
