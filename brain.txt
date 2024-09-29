@@ -13,9 +13,12 @@ les monstre peuvent faire 2 actions : attaquer, se défendre
 un donjon est un ensemble de salles
 
 
+Utilisation de JWT pour identifié le joueur
+JWT avec expiration ou pas 
+Mise en place de droits pour certains endpointsh
 
 
-/getinfo : 
+/getinfo --> List toutes les info de l'environnement / player 
 {
     "player":{}
     "environnement":{
@@ -27,4 +30,8 @@ un donjon est un ensemble de salles
     }
 }
 
+Donjon [nom,level, nombre de salles] lv ~= aux nombre de salle (lv1 : 2-5 salles)
+
+/getDonjons --> liste tout les donjons disponnible 
+/moove --> permet de ce deplacer retourne les informations sur la position actuel 
 
