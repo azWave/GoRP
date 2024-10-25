@@ -17,5 +17,11 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+# Temporary folder
+tmp/
+
 # Go workspace file
 go.work
+
+# Air config file
+.air.toml
