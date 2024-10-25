@@ -7,12 +7,9 @@ import (
 var errorMessages []string
 
 func Render(player *Player, world *World) {
-    // Clear the screen if there are no new error messages
-    if len(errorMessages) == 0 {
-        fmt.Print("\033[H\033[2J") // Clear the screen
-    }
+    // Clear the screen
+    fmt.Print("\033[H\033[2J")
 
-    // Render the world and player position
     for y, row := range world.Map {
         for x, cell := range row {
             if player.X == x && player.Y == y {
@@ -24,16 +21,8 @@ func Render(player *Player, world *World) {
         fmt.Println()
     }
 
-    // Print and clear error messages after displaying them
+    // Print error messages if any
     for _, msg := range errorMessages {
         fmt.Println(msg)
-    }
-    errorMessages = []string{} // Clear error messages after displaying
-}
-
-// AddErrorMessage adds an error message to be displayed
-func AddErrorMessage(msg string) {
-    if len(msg) > 0 && msg[:7] == "[ERROR]" {
-        errorMessages = append(errorMessages, msg)
     }
 }

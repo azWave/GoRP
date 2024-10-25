@@ -26,7 +26,6 @@ func GenerateWorld(size int) *World {
 
 func (w *World) IsWalkable(x, y int) bool {
 	if y < 0 || y >= len(w.Map) || x < 0 || x >= len(w.Map[y]) {
-		AddErrorMessage("Out of bounds")
 		return false
 	}
 	return w.Map[y][x] == '.'
