@@ -7,8 +7,10 @@ type Player struct {
 	Name string
 }
 
-func NewPlayer(x, y int) *Player {
-	fmt.Print("Enter your name: ")
+func CreatePlayer(x, y int) *Player {
+	fmt.Print("Let's create your character. \n" +
+		"What is your name?\n" +
+		"> ")
 	name := ReadInputWithConfirm()
 	return &Player{x, y, name}
 }
