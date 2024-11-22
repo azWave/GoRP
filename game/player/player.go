@@ -1,6 +1,10 @@
-package game
+package player
 
-import "fmt"
+import (
+	"fmt"
+	"gorp/game/console"
+	"gorp/game/world"
+)
 
 type Player struct {
 	X, Y int
@@ -11,11 +15,11 @@ func CreatePlayer(x, y int) *Player {
 	fmt.Print("Let's create your character. \n" +
 		"What is your name?\n" +
 		"> ")
-	name := ReadInputWithConfirm()
+	name := console.ReadInputWithConfirm()
 	return &Player{x, y, name}
 }
 
-func (p *Player) Move(direction string, world *World) {
+func (p *Player) Move(direction string, world *world.World) {
 	switch direction {
 	case "s":
 		if world.IsWalkable(p.X, p.Y+1) {

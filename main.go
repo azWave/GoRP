@@ -2,15 +2,18 @@ package main
 
 import (
 	"gorp/game"
+	"gorp/game/console"
+	"gorp/game/player"
+	"gorp/game/world"
 )
 
 func main() {
-	player := game.CreatePlayer(1, 1)
-	world := game.GenerateWorld(5)
+	player := player.CreatePlayer(1, 1)
+	world := world.GenerateWorld(5)
 
 	for {
 		game.Render(player, world)
-		input := game.ReadInput()
+		input := console.ReadInput()
 
 		player.Move(input, world)
 	}
