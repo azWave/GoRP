@@ -1,21 +1,27 @@
 package main
 
 import (
+	"fmt"
 	"gorp/game"
 	"gorp/game/console"
 	"gorp/game/player"
 	"gorp/game/world"
+	"gorp/movements"
 )
 
 func main() {
-	player := player.CreatePlayer(1, 1)
+	fmt.Print("Let's create your character. \n" +
+		"What is your name?\n" +
+		"> ")
+	name := console.ReadInputWithConfirm()
+	player := player.New(1, 1, name)
 	world := world.GenerateWorld(5)
 
 	for {
 		game.Render(player, world)
 		input := console.ReadInput()
 
-		player.Move(input, world)
+		movements.Move(player, input, world)
 	}
 
 }
