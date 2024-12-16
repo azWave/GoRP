@@ -23,15 +23,15 @@ func TestFileRepository(t *testing.T) {
 		Class: "Guerrier",
 		Stats: entities.Stats{
 			Health:       100,
-			Mana:         50,
+			Mana:         45,
 			Strength:     15,
 			Intelligence: 5,
-			Defense:      10,
-			MagicResist:  8,
-			Agility:      7,
-			Luck:         4,
-			Endurance:    9,
-			Spirit:       6,
+			Defense:      12,
+			MagicResist:  6,
+			Agility:      8,
+			Luck:         5,
+			Endurance:    10,
+			Spirit:       4,
 		},
 	}
 
@@ -48,7 +48,7 @@ func TestFileRepository(t *testing.T) {
 	}
 
 	// Test de la cohérence des données chargées avec celles sauvegardées
-	if loadedChar.Name != char.Name {
-		t.Errorf("Nom incorrect : attendu %s, obtenu %s", char.Name, loadedChar.Name)
+	if loadedChar != char {
+		t.Errorf("Nom incorrect : attendu %v, obtenu %v", char, loadedChar)
 	}
 }
