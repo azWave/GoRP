@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	repo := &output.FileRepository{FilePath: "characters.json"}
+	repo := &output.FileRepository{BasePath: "data/"}
 	characterService := &services.CharacterService{Repo: repo}
 	input.CharacterCreationHandler(characterService)
 }

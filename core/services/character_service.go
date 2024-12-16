@@ -22,7 +22,7 @@ func (cs *CharacterService) CreateCharacter(name, className string) (entities.Ch
 		Stats: stats,
 	}
 
-	err := cs.Repo.Save(character)
+	err := cs.Repo.SaveCharacter(character)
 	if err != nil {
 		return entities.Character{}, errors.New("erreur lors de la sauvegarde du personnage")
 	}
