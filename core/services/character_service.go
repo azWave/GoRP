@@ -35,3 +35,11 @@ func (cs *CharacterService) CreateCharacter(name, className string) (entities.Ch
 	}
 	return character, nil
 }
+
+func (cs *CharacterService) LoadCharacter(name string) (entities.Character, error) {
+	character, err := cs.Repo.LoadCharacter(name)
+	if err != nil {
+		return entities.Character{}, errors.New("personnage introuvable")
+	}
+	return character, nil
+}
