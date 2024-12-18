@@ -39,6 +39,6 @@ func TestPrintCharacterSummary(t *testing.T) {
 
 	// Comparaison de la sortie
 	if actualOutput != expectedOutput {
-		t.Errorf("PrintCharacterSummary() = %v, want %v", actualOutput, expectedOutput)
+		t.Errorf("PrintCharacterSummary() = %v, attendu %v", actualOutput, expectedOutput)
 	}
 }
