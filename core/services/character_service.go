@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"gorp/core/domain/constants"
 	"gorp/core/domain/entities"
 	"gorp/core/domain/interfaces"
 )
@@ -16,10 +17,10 @@ func (cs *CharacterService) CreateCharacter(name, className string) (entities.Ch
 		return entities.Character{}, errors.New("classe inconnue")
 	}
 
-	if len(name) < 3 {
+	if len(name) < constants.MinCharacterNameLength {
 		return entities.Character{}, errors.New("nom trop court")
 	}
-	if len(name) > 20 {
+	if len(name) > constants.MaxCharacterNameLength {
 		return entities.Character{}, errors.New("nom trop long")
 	}
 
