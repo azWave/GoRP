@@ -11,7 +11,6 @@ func GetTestTempDir() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Println("baseDir", baseDir)
 	tempDir := filepath.Join(baseDir, "tmp")
 	if _, err := os.Stat(tempDir); os.IsNotExist(err) {
 		err := os.Mkdir(tempDir, 0755)

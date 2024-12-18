@@ -9,5 +9,6 @@ import (
 func main() {
 	repo := &output.FileRepository{BasePath: "tmp/data/"}
 	characterService := &services.CharacterService{Repo: repo}
-	input.CharacterCreationHandler(characterService)
+	printer := &output.FmtPrinter{}
+	input.CharacterCreationHandler(printer, characterService)
 }

@@ -5,10 +5,9 @@ import (
 	"gorp/core/domain/entities"
 	"gorp/core/domain/interfaces"
 	"gorp/core/services"
-	"gorp/infra/output"
 )
 
-func CharacterCreationHandler(service *services.CharacterService) entities.Character {
+func CharacterCreationHandler(printer interfaces.Printer, service *services.CharacterService) entities.Character {
 	var name, class string
 
 	fmt.Println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
@@ -29,7 +28,6 @@ func CharacterCreationHandler(service *services.CharacterService) entities.Chara
 	fmt.Println("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
 	fmt.Println("Personnage créé avec succès.")
 	fmt.Println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-	printer := &output.FmtPrinter{}
 	PrintCharacterSummary(printer, character)
 
 	return character
