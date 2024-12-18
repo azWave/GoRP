@@ -3,7 +3,9 @@ package input
 import (
 	"fmt"
 	"gorp/core/domain/entities"
+	"gorp/core/domain/interfaces"
 	"gorp/core/services"
+	"gorp/infra/output"
 )
 
 func CharacterCreationHandler(service *services.CharacterService) entities.Character {
@@ -27,13 +29,14 @@ func CharacterCreationHandler(service *services.CharacterService) entities.Chara
 	fmt.Println("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
 	fmt.Println("Personnage créé avec succès.")
 	fmt.Println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-	PrintCharacterSummary(character)
+	printer := &output.FmtPrinter{}
+	PrintCharacterSummary(printer, character)
 
 	return character
 }
 
-func PrintCharacterSummary(character entities.Character) {
-	fmt.Printf(
+func PrintCharacterSummary(printer interfaces.Printer, character entities.Character) {
+	printer.Printf(
 		"Nom : %v\n"+
 			"Classe : %v\n"+
 			"PV : %v\n"+

@@ -3,7 +3,7 @@ package input_test
 import (
 	"gorp/core/domain/entities"
 	"gorp/infra/input"
-	"gorp/pkg"
+	"gorp/infra/output"
 	"testing"
 )
 
@@ -15,10 +15,13 @@ func TestPrintCharacterSummary(t *testing.T) {
 		Stats: entities.ClassStats["Guerrier"],
 	}
 
-	actualOutput, err := pkg.CaptureFunctionConsoleOutput(func() { input.PrintCharacterSummary(character) })
-	if err != nil {
-		t.Errorf("CaptureFunctionConsoleOutput() a retourné une erreur : %v", err)
-	}
+	// actualOutput, err := pkg.CaptureFunctionConsoleOutput(func() { input.PrintCharacterSummary(character) })
+	// if err != nil {
+	// 	t.Errorf("CaptureFunctionConsoleOutput() a retourné une erreur : %v", err)
+	// }
+	mockPrinter := &output.MockPrinter{}
+	input.PrintCharacterSummary(mockPrinter, character)
+	actualOutput := mockPrinter.Output.String()
 
 	// Sortie attendue
 	expectedOutput := "Nom : Aragorn\n" +
