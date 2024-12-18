@@ -15,9 +15,9 @@ func TestFileRepository(t *testing.T) {
 		t.Fatalf("Erreur lors de la création du dossier temporaire : %v", err)
 	}
 	basePath := filepath.Join(tempDir, "test_data")
-	repo := output.NewFileRepository(basePath)
 	defer os.RemoveAll(basePath) // Nettoyer après test
 
+	repo := output.NewFileRepository(basePath)
 	char := entities.Character{
 		Name:  "TestHero",
 		Class: "Guerrier",
@@ -35,20 +35,21 @@ func TestFileRepository(t *testing.T) {
 		},
 	}
 
-	// Test sauvegarde personnage
-	err = repo.SaveCharacter(char)
-	if err != nil {
-		t.Fatalf("Erreur sauvegarde personnage : %v", err)
-	}
+	t.Run("Test sauvegarde personnage", func(t *testing.T) {
+		err := repo.SaveCharacter(char)
+		if err != nil {
+			t.Fatalf("Erreur sauvegarde personnage : %v", err)
+		}
+	})
 
-	// Test chargement personnage
-	loadedChar, err := repo.LoadCharacter("TestHero")
-	if err != nil {
-		t.Fatalf("Erreur chargement personnage : %v", err)
-	}
+	t.Run("Test chargement personnage", func(t *testing.T) {
+		loadedChar, err := repo.LoadCharacter("TestHero")
+		if err != nil {
+			t.Fatalf("Erreur chargement personnage : %v", err)
+		}
 
-	// Test de la cohérence des données chargées avec celles sauvegardées
-	if loadedChar != char {
-		t.Errorf("Nom incorrect : attendu %v, obtenu %v", char, loadedChar)
-	}
+		if loadedChar != char {
+			t.Errorf("Données incorrectes : attendu %v, obtenu %v", char, loadedChar)
+		}
+	})
 }
