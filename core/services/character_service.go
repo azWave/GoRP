@@ -16,6 +16,13 @@ func (cs *CharacterService) CreateCharacter(name, className string) (entities.Ch
 		return entities.Character{}, errors.New("classe inconnue")
 	}
 
+	if len(name) < 3 {
+		return entities.Character{}, errors.New("nom trop court")
+	}
+	if len(name) > 20 {
+		return entities.Character{}, errors.New("nom trop long")
+	}
+
 	character := entities.Character{
 		Name:  name,
 		Class: className,

@@ -15,18 +15,33 @@ func TestCharacterService(t *testing.T) {
 		t.Fatalf("Erreur lors de la création du dossier temporaire : %v", err)
 	}
 	basePath := filepath.Join(tempDir, "test_data")
-	repo := &output.FileRepository{BasePath: basePath}
 	defer os.RemoveAll(basePath) // Nettoyer après test
 
-	// Test CreateCharacter with unknown class
-	_, err = (&services.CharacterService{Repo: repo}).CreateCharacter("TestHero", "UnknownClass")
-	if err == nil {
-		t.Fatalf("Erreur attendue lors de la creation du personnage : %v", err)
+	repo := &output.FileRepository{BasePath: basePath}
+	service := &services.CharacterService{Repo: repo}
+
+	tests := []struct {
+		name       string
+		inputName  string
+		inputClass string
+		wantErr    string
+	}{
+		{"Character valide", "Aragorn", "Guerrier", ""},
+		{"Nom trop court", "Al", "Guerrier", "nom trop court"},
+		{"Nom trop long", "UnNomExcessivementLongPourUnHeros", "Guerrier", "nom trop long"},
+		{"Classe inconnue", "Aragorn", "UnknownClass", "classe inconnue"},
 	}
 
-	// Test CreateCharacter with known class
-	_, err = (&services.CharacterService{Repo: repo}).CreateCharacter("TestHero", "Guerrier")
-	if err != nil {
-		t.Fatalf("Erreur lors de la creation du personnage : %v", err)
+	// Test CreateCharacter
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := service.CreateCharacter(tt.inputName, tt.inputClass)
+			if err == nil && tt.wantErr != "" {
+				t.Fatalf("Erreur attendue : %v, obtenue : nil", tt.wantErr)
+			}
+			if err != nil && err.Error() != tt.wantErr {
+				t.Fatalf("Erreur attendue : %v, obtenue : %v", tt.wantErr, err.Error())
+			}
+		})
 	}
 }

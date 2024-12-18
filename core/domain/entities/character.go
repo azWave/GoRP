@@ -7,14 +7,14 @@ type Character struct {
 }
 
 type Stats struct {
-	Health       int // PV
-	Mana         int // PM
-	Strength     int // Force
-	Intelligence int // Intelligence
-	Defense      int // Défense
-	MagicResist  int // Résistance Magique
-	Agility      int // Agilité
-	Luck         int // Chance
-	Endurance    int // Endurance
-	Spirit       int // Esprit
+	Health       int16 // PV
+	Mana         int16 // PM
+	Strength     int16 // Force
+	Intelligence int16 // Intelligence
+	Defense      int16 // Défense
+	MagicResist  int16 // Résistance Magique
+	Agility      int16 // Agilité
+	Luck         int16 // Chance
+	Endurance    int16 // Endurance
+	Spirit       int16 // Esprit
 }
