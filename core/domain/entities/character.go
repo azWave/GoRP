@@ -1,9 +1,10 @@
 package entities
 
 type Character struct {
-	Name  string
-	Class string
-	Stats Stats
+	Name     string
+	Class    string
+	Stats    Stats
+	Position Position
 }
 
 type Stats struct {
@@ -17,4 +18,9 @@ type Stats struct {
 	Luck         int16 // Chance
 	Endurance    int16 // Endurance
 	Spirit       int16 // Esprit
+}
+
+type Position struct {
+	X int
+	Y int
 }
