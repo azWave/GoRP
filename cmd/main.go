@@ -53,13 +53,13 @@ func main() {
 
 		switch command {
 		case "z":
-			character.Move(0, -1)
+			character.Move(0, -1, gameMap)
 		case "q":
-			character.Move(-1, 0)
+			character.Move(-1, 0, gameMap)
 		case "s":
-			character.Move(0, 1)
+			character.Move(0, 1, gameMap)
 		case "d":
-			character.Move(1, 0)
+			character.Move(1, 0, gameMap)
 		case "quit":
 			fmt.Println("Quitting the game.")
 			return

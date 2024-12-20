@@ -21,8 +21,13 @@ func (ms *MapService) GenerateMap(width, height int) *entities.Map {
 		}
 	}
 
-	// Example: Add a few random rooms
 	for i := 0; i < 5; i++ {
+		x := rand.Intn(width)
+		y := rand.Intn(height)
+		cells[y][x] = entities.Cell{Type: entities.Rock}
+	}
+
+	for i := 0; i < 2; i++ {
 		x := rand.Intn(width)
 		y := rand.Intn(height)
 		roomType := entities.RoomType(rand.Intn(3))
