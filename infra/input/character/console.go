@@ -7,7 +7,7 @@ import (
 	"gorp/core/services"
 )
 
-func CharacterLoadHandler(printer interfaces.Printer, service *services.CharacterService) entities.Character {
+func CharacterLoadHandler(printer interfaces.Printer, service *services.CharacterService, mapService *services.MapService) entities.Character {
 	var name string
 
 	fmt.Println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
@@ -26,6 +26,12 @@ func CharacterLoadHandler(printer interfaces.Printer, service *services.Characte
 	fmt.Println("Personnage chargé avec succès.")
 	fmt.Println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
 	PrintCharacterSummary(printer, character)
+
+	_, err = mapService.LoadMap(character.Position.MapName)
+	if err != nil {
+		fmt.Println("Erreur :", err)
+		return entities.Character{}
+	}
 
 	return character
 }
