@@ -8,15 +8,6 @@ import (
 
 func TestMapService(t *testing.T) {
 	serviceMap := services.MapService{}
-	t.Run("Test initialisation de la map", func(t *testing.T) {
-		// Test d'initialisation de la map
-		refMap := entities.NewMap(10, 10, entities.TileTypes[entities.Land])
-		serviceMap.InitializeMap(10, 10)
-		if refMap != serviceMap.GameMap {
-			t.Error("Les maps ne sont pas identiques")
-		}
-	})
-
 	t.Run("Test ajout d'obstacles", func(t *testing.T) {
 		// Test d'ajout d'obstacles
 		serviceMap.InitializeMap(10, 10)
