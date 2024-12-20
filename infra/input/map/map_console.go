@@ -33,7 +33,7 @@ func PrintMap(printer interfaces.Printer, gameMap *entities.Map, playerPosition 
 	for y := 0; y < gameMap.Height; y++ {
 		for x := 0; x < gameMap.Width; x++ {
 			if x == playerPosition.X && y == playerPosition.Y {
-				printer.Print("P")
+				printer.Print("£ ")
 			} else {
 				tile, _ := gameMap.GetTile(x, y)
 				printer.Print(tile.DisplayChar)
