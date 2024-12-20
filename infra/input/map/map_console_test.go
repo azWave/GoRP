@@ -14,12 +14,16 @@ func TestPrintMap(t *testing.T) {
 	mapService.InitializeMap(10, 10)
 	mapService.AddTile(1, 1, entities.Water, entities.TileTypes[entities.Water].HasCollision)
 
+	character := entities.Character{
+		Position: entities.Position{X: 0, Y: 0, MapName: "world-1"},
+	}
+
 	mockPrinter := &output.MockPrinter{}
-	input.PrintMap(mockPrinter, mapService.GameMap)
+	input.PrintMap(mockPrinter, mapService.GameMap, character.Position)
 	actualOutput := mockPrinter.Output.String()
 
 	// Sortie attendue
-	expectedOutput := ". . . . . . . . . . \n" +
+	expectedOutput := "£ . . . . . . . . . \n" +
 		". ~ . . . . . . . . \n" +
 		". . . . . . . . . . \n" +
 		". . . . . . . . . . \n" +
