@@ -3,7 +3,6 @@ package services
 import (
 	"gorp/core/domain/entities"
 	"math/rand"
-	"time"
 )
 
 type MapService struct{}
@@ -13,7 +12,6 @@ func NewMapService() *MapService {
 }
 
 func (ms *MapService) GenerateMap(width, height int) *entities.Map {
-	rand.Seed(time.Now().UnixNano())
 
 	cells := make([][]entities.Cell, height)
 	for i := range cells {
