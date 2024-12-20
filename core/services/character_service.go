@@ -40,6 +40,7 @@ func (cs *CharacterService) CreateCharacter(name, className string) (entities.Ch
 	if err != nil {
 		return entities.Character{}, err
 	}
+	cs.Character = &character
 	return character, nil
 }
 
