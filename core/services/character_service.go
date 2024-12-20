@@ -28,13 +28,26 @@ func (cs *CharacterService) CreateCharacter(name, className string) (entities.Ch
 		Name:  name,
 		Class: className,
 		Stats: stats,
+		Position: entities.Position{
+			X:       0,
+			Y:       0,
+			MapName: constants.FirstWorldMapName,
+		},
 	}
 
-	err := cs.Repo.SaveCharacter(character)
+	err := cs.SaveCharacter(character)
 	if err != nil {
-		return entities.Character{}, errors.New("erreur lors de la sauvegarde du personnage")
+		return entities.Character{}, err
 	}
 	return character, nil
+}
+
+func (cs *CharacterService) SaveCharacter(character entities.Character) error {
+	err := cs.Repo.SaveCharacter(character)
+	if err != nil {
+		return errors.New("erreur lors de la sauvegarde du personnage")
+	}
+	return nil
 }
 
 func (cs *CharacterService) LoadCharacter(name string) (entities.Character, error) {
@@ -43,4 +56,9 @@ func (cs *CharacterService) LoadCharacter(name string) (entities.Character, erro
 		return entities.Character{}, errors.New("personnage introuvable")
 	}
 	return character, nil
+}
+
+func (cs *CharacterService) SetMap(character entities.Character, mapName string) error {
+	character.Position.MapName = mapName
+	return cs.SaveCharacter(character)
 }

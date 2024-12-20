@@ -10,6 +10,7 @@ import (
 
 func main() {
 	repo := &output.FileRepository{BasePath: "tmp/data/"}
+	mapService := &services.MapService{MapRepo: repo}
 	characterService := &services.CharacterService{Repo: repo}
 	printer := &output.FmtPrinter{}
 
@@ -21,7 +22,7 @@ Start:
 
 	switch choice {
 	case 1:
-		input_character.CharacterLoadHandler(printer, characterService)
+		input_character.CharacterLoadHandler(printer, characterService, mapService)
 	case 2:
 		input_character.CharacterCreationHandler(printer, characterService)
 	default:
@@ -29,8 +30,10 @@ Start:
 		goto Start
 	}
 
-	mapService := &services.MapService{}
-	input_map.MapCreationHandler(printer, mapService)
+	if mapService.GameMap == nil {
+		input_map.MapCreationHandler(printer, mapService)
+	}
+	input_map.PrintMap(printer, mapService.GameMap)
 }
 
 // func main() {

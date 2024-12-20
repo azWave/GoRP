@@ -1,13 +1,16 @@
 package services
 
 import (
+	"encoding/json"
 	"gorp/core/domain/entities"
+	"gorp/core/domain/interfaces"
 	"math/rand"
 	"time"
 )
 
 type MapService struct {
 	GameMap *entities.Map
+	MapRepo interfaces.MapRepository
 }
 
 func (ms *MapService) InitializeMap(width, height int) {
@@ -52,4 +55,26 @@ func (ms *MapService) AddObstacles(obstacles []struct {
 	for _, obstacle := range obstacles {
 		ms.AddTile(obstacle.X, obstacle.Y, obstacle.TileType, obstacle.HasCollision)
 	}
+}
+
+func (ms *MapService) SaveMap(mapName string) error {
+	data, err := json.Marshal(ms.GameMap)
+	if err != nil {
+		return err
+	}
+	return ms.MapRepo.SaveMap(mapName, string(data))
+}
+
+func (ms *MapService) LoadMap(mapName string) (entities.Map, error) {
+	data, err := ms.MapRepo.LoadMap(mapName)
+	if err != nil {
+		return entities.Map{}, err
+	}
+	var gameMap entities.Map
+	err = json.Unmarshal([]byte(data), &gameMap)
+	if err != nil {
+		return entities.Map{}, err
+	}
+	ms.GameMap = &gameMap
+	return *ms.GameMap, nil
 }
