@@ -61,3 +61,36 @@ func (fr *FileRepository) LoadCharacter(name string) (entities.Character, error)
 
 	return character, nil
 }
+
+func (fr *FileRepository) SaveMap(mapName string, mapData string) error {
+	mapDir := filepath.Join(fr.BasePath, "maps")
+	if err := fr.ensureDirectoryExists(mapDir); err != nil {
+		return fmt.Errorf("erreur création dossier maps : %w", err)
+	}
+
+	mapFile := filepath.Join(mapDir, fmt.Sprintf("%s.json", mapName))
+	file, err := os.Create(mapFile)
+	if err != nil {
+		return fmt.Errorf("erreur création fichier carte : %w", err)
+	}
+	defer file.Close()
+
+	_, err = file.Write([]byte(mapData))
+	return err
+}
+
+func (fr *FileRepository) LoadMap(mapName string) (string, error) {
+	mapFile := filepath.Join(fr.BasePath, "maps", fmt.Sprintf("%s.json", mapName))
+	file, err := os.Open(mapFile)
+	if err != nil {
+		return "", fmt.Errorf("erreur ouverture fichier carte : %w", err)
+	}
+	defer file.Close()
+
+	data, err := os.ReadFile(mapFile)
+	if err != nil {
+		return "", fmt.Errorf("erreur lecture fichier carte : %w", err)
+	}
+
+	return string(data), nil
+}

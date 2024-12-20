@@ -30,11 +30,19 @@ func (cs *CharacterService) CreateCharacter(name, className string) (entities.Ch
 		Stats: stats,
 	}
 
-	err := cs.Repo.SaveCharacter(character)
+	err := cs.SaveCharacter(character)
 	if err != nil {
-		return entities.Character{}, errors.New("erreur lors de la sauvegarde du personnage")
+		return entities.Character{}, err
 	}
 	return character, nil
+}
+
+func (cs *CharacterService) SaveCharacter(character entities.Character) error {
+	err := cs.Repo.SaveCharacter(character)
+	if err != nil {
+		return errors.New("erreur lors de la sauvegarde du personnage")
+	}
+	return nil
 }
 
 func (cs *CharacterService) LoadCharacter(name string) (entities.Character, error) {

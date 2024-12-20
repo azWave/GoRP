@@ -29,7 +29,7 @@ Start:
 		goto Start
 	}
 
-	mapService := &services.MapService{}
+	mapService := &services.MapService{MapRepo: repo}
 	input_map.MapCreationHandler(printer, mapService)
 }
 
