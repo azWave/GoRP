@@ -26,14 +26,18 @@ func MapCreationHandler(printer interfaces.Printer, service *services.MapService
 
 	service.SaveMap("world-1")
 
-	PrintMap(printer, service.GameMap)
+	PrintMap(printer, service.GameMap, entities.Position{X: 0, Y: 0, MapName: "world-1"})
 }
 
-func PrintMap(printer interfaces.Printer, gameMap *entities.Map) {
+func PrintMap(printer interfaces.Printer, gameMap *entities.Map, playerPosition entities.Position) {
 	for y := 0; y < gameMap.Height; y++ {
 		for x := 0; x < gameMap.Width; x++ {
-			tile, _ := gameMap.GetTile(x, y)
-			printer.Print(tile.DisplayChar)
+			if x == playerPosition.X && y == playerPosition.Y {
+				printer.Print("P")
+			} else {
+				tile, _ := gameMap.GetTile(x, y)
+				printer.Print(tile.DisplayChar)
+			}
 		}
 		printer.Println()
 	}

@@ -33,7 +33,7 @@ Start:
 	if mapService.GameMap == nil {
 		input_map.MapCreationHandler(printer, mapService)
 	}
-	input_map.PrintMap(printer, mapService.GameMap)
+	input_map.PrintMap(printer, mapService.GameMap, characterService.Character.Position)
 }
 
 // func main() {

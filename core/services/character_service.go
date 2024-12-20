@@ -8,7 +8,8 @@ import (
 )
 
 type CharacterService struct {
-	Repo interfaces.CharacterRepository
+	Character *entities.Character
+	Repo      interfaces.CharacterRepository
 }
 
 func (cs *CharacterService) CreateCharacter(name, className string) (entities.Character, error) {
@@ -55,6 +56,7 @@ func (cs *CharacterService) LoadCharacter(name string) (entities.Character, erro
 	if err != nil {
 		return entities.Character{}, errors.New("personnage introuvable")
 	}
+	cs.Character = &character
 	return character, nil
 }
 
