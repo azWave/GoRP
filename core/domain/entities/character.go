@@ -20,11 +20,6 @@ type Stats struct {
 	Spirit       int16 // Esprit
 }
 
-type Position struct {
-	X int
-	Y int
-}
-
 var ClassStats = map[string]Stats{
 	"Guerrier": {
 		Health:       150,

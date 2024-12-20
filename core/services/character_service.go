@@ -28,6 +28,11 @@ func (cs *CharacterService) CreateCharacter(name, className string) (entities.Ch
 		Name:  name,
 		Class: className,
 		Stats: stats,
+		Position: entities.Position{
+			X:       0,
+			Y:       0,
+			MapName: constants.FirstWorldMapName,
+		},
 	}
 
 	err := cs.SaveCharacter(character)
@@ -51,4 +56,9 @@ func (cs *CharacterService) LoadCharacter(name string) (entities.Character, erro
 		return entities.Character{}, errors.New("personnage introuvable")
 	}
 	return character, nil
+}
+
+func (cs *CharacterService) SetMap(character entities.Character, mapName string) error {
+	character.Position.MapName = mapName
+	return cs.SaveCharacter(character)
 }

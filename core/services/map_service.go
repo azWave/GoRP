@@ -64,3 +64,17 @@ func (ms *MapService) SaveMap(mapName string) error {
 	}
 	return ms.MapRepo.SaveMap(mapName, string(data))
 }
+
+func (ms *MapService) LoadMap(mapName string) (entities.Map, error) {
+	data, err := ms.MapRepo.LoadMap(mapName)
+	if err != nil {
+		return entities.Map{}, err
+	}
+	var gameMap entities.Map
+	err = json.Unmarshal([]byte(data), &gameMap)
+	if err != nil {
+		return entities.Map{}, err
+	}
+	ms.GameMap = &gameMap
+	return *ms.GameMap, nil
+}
