@@ -2,7 +2,7 @@ package input_test
 
 import (
 	"gorp/core/domain/entities"
-	"gorp/infra/input"
+	input "gorp/infra/input/character"
 	"gorp/infra/output"
 	"testing"
 )

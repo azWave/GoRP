@@ -3,48 +3,53 @@ package services
 import (
 	"gorp/core/domain/entities"
 	"math/rand"
+	"time"
 )
 
-type MapService struct{}
+type MapService struct {
+	GameMap *entities.Map
+}
 
-func (ms *MapService) GenerateMap(with, height int) *entities.Map {
+func (ms *MapService) InitializeMap(width, height int) {
+	ms.GameMap = entities.NewMap(width, height, entities.TileTypes[entities.Land])
+}
 
-	cells := make([][]entities.Cell, height)
-	for y := range cells {
-		row := make([]entities.Cell, with)
-		for x := range row {
-			row[x] = entities.Cell{Type: entities.Land}
+func (ms *MapService) AddTile(x, y int, tileType entities.TileType, hasCollision bool) error {
+	tile := entities.Tile{
+		Type:         tileType,
+		HasCollision: hasCollision,
+		DisplayChar:  entities.TileTypes[tileType].DisplayChar,
+	}
+	return ms.GameMap.SetTile(x, y, tile)
+}
+
+func (ms *MapService) AddRandomObstacles(count int) {
+	rand.Seed(time.Now().UnixNano())
+	placed := 0
+	for placed < count {
+		x := rand.Intn(ms.GameMap.Width)
+		y := rand.Intn(ms.GameMap.Height)
+
+		// Vérifie si la cellule est déjà un obstacle
+		tile, _ := ms.GameMap.GetTile(x, y)
+		if tile.Type == entities.Land {
+			obstacleType := entities.Water
+			if rand.Intn(2) == 1 {
+				obstacleType = entities.Rock
+			}
+			ms.AddTile(x, y, obstacleType, entities.TileTypes[obstacleType].HasCollision)
+			placed++
 		}
-		cells[y] = row
-
-	}
-
-	GenerateRandomRocks(cells)
-	return &entities.Map{With: with, Height: height, Cells: cells}
-}
-
-func GenerateRandomRocks(cells [][]entities.Cell) {
-	rand.Seed(42)
-
-	for i := 0; i < 5; i++ {
-		x := rand.Intn(len(cells[0]))
-		y := rand.Intn(len(cells))
-		cells[y][x] = entities.Cell{Type: entities.Rock}
 	}
 }
 
-func (ms *MapService) IsWallkable(x, y int, gameMap entities.Map) bool {
-	if x < 0 || x >= gameMap.With || y < 0 || y >= gameMap.Height {
-		return false
+func (ms *MapService) AddObstacles(obstacles []struct {
+	X            int
+	Y            int
+	TileType     entities.TileType
+	HasCollision bool
+}) {
+	for _, obstacle := range obstacles {
+		ms.AddTile(obstacle.X, obstacle.Y, obstacle.TileType, obstacle.HasCollision)
 	}
-	cell := gameMap.Cells[y][x]
-	return entities.ClassCellProperties[cell.Type].Wallkable
-}
-
-func (ms *MapService) Move(currentX, currentY, dx, dy int, gameMap entities.Map) (int, int, bool) {
-	newX, newY := currentX+dx, currentY+dy
-	if !ms.IsWallkable(newX, newY, gameMap) {
-		return currentX, currentY, false
-	}
-	return newX, newY, true
 }
