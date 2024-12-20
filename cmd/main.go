@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"gorp/core/domain/entities"
 	"gorp/core/services"
+	"gorp/infra/input"
+	"gorp/infra/output"
 )
 
 // func main() {
@@ -26,7 +28,7 @@ import (
 //		}
 //	}
 func main() {
-	mapService := services.NewMapService()
+	mapService := services.MapService{}
 	gameMap := mapService.GenerateMap(10, 10)
 
 	character := entities.Character{
@@ -37,38 +39,10 @@ func main() {
 			Mana:   50,
 			// ... other stats
 		},
-		Position: entities.Position{X: 0, Y: 0},
+		Position: entities.Position{X: 3, Y: 3},
 	}
 
 	fmt.Println("Generated Map:")
-	gameMap.Display(&character)
-
-	fmt.Printf("Character %s is at position (%d, %d)\n", character.Name, character.Position.X, character.Position.Y)
-
-	// Movement loop
-	var command string
-	for {
-		fmt.Print("Enter command (z/q/s/d to move, quit to quit): ")
-		fmt.Scan(&command)
-
-		switch command {
-		case "z":
-			character.Move(0, -1, gameMap)
-		case "q":
-			character.Move(-1, 0, gameMap)
-		case "s":
-			character.Move(0, 1, gameMap)
-		case "d":
-			character.Move(1, 0, gameMap)
-		case "quit":
-			fmt.Println("Quitting the game.")
-			return
-		default:
-			fmt.Println("Invalid command.")
-		}
-
-		fmt.Println("Updated Map:")
-		gameMap.Display(&character)
-		fmt.Printf("Character %s is at position (%d, %d)\n", character.Name, character.Position.X, character.Position.Y)
-	}
+	printer := &output.FmtPrinter{}
+	input.PrintMap(printer, gameMap, &character)
 }

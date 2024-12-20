@@ -84,3 +84,18 @@ func PrintCharacterSummary(printer interfaces.Printer, character entities.Charac
 		character.Stats.Spirit,
 	)
 }
+
+func PrintMap(printer interfaces.Printer, gameMap *entities.Map, character *entities.Character) {
+	for y := 0; y < gameMap.Height; y++ {
+		for x := 0; x < gameMap.With; x++ {
+			if character.Position.X == x && character.Position.Y == y {
+				printer.Printf("$")
+			} else {
+				cell := gameMap.Cells[y][x]
+				printer.Printf("%s", entities.ClassCellProperties[cell.Type].Display)
+			}
+			printer.Printf(" ")
+		}
+		printer.Println()
+	}
+}
